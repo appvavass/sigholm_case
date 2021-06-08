@@ -5,12 +5,10 @@ import numpy as np
 from typing import Type
 from datetime import datetime
 from typing import Dict
+import json
 
 temperature =  Type[float]
 heat_load = Type[float]
-
-
-example_input = {'2021-05-23T20:00:00+00:00':25.6,'2021-05-23T21:00:00+00:00':10.4,'2021-05-23T22:00:00+00:00':-10.2}
 
 def forecast_heat_load(input_dict: Dict[datetime, temperature]) -> Dict[datetime, heat_load]:
    
@@ -18,7 +16,7 @@ def forecast_heat_load(input_dict: Dict[datetime, temperature]) -> Dict[datetime
     # Do your forecast here
 
     forecast = pd.DataFrame.from_dict(data = input_dict, orient= 'index', columns=['forecast_temp'])
-    forecast.index = pd.to_datetime(forecast.index) ## convert to datetime if necessary?
+    forecast.index = pd.to_datetime(forecast.index) ## convert to datetime 
 
     ### use coefficient calculated from the previous data analysis    
     
@@ -28,10 +26,20 @@ def forecast_heat_load(input_dict: Dict[datetime, temperature]) -> Dict[datetime
 
     output_dict = forecast['forecast_load'].to_dict
 
-    ### uncomment to plot estimated load
+    ### uncomment  this section to plot estimated load:
     
-    #plt.plot(forecast.index, forecast['forecast_load'], color='red')
-    #plt.show()
-    
+    plt.plot_date(forecast.index, forecast['forecast_load'],'r-')
+    plt.xlabel('Date')
+    plt.ylabel('Load [MW]')
+    plt.setp(plt.gca().xaxis.get_majorticklabels(),'rotation', 45)
+    plt.show()
+    ######### end of section
 
     return output_dict
+
+### execute the forecast 
+
+raw_data  = open('temperature_forecast.json')
+temp_forecast = json.load(raw_data)
+
+forecast_heat_load(temp_forecast)

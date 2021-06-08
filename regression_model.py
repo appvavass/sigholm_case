@@ -25,15 +25,20 @@ hist_df = df_load.merge(df_temp, left_on= 'time', right_on = 'time')
 hist_df['time'] = pd.to_datetime(hist_df['time'])  ##convert to datetime
 
 ### exploring the data #########################################################
-
+plt.figure()
 plt.scatter(hist_df['load'],hist_df['temperature'],marker = '*')
-#plt.show()
-
+plt.title('Raw data')
+plt.xlabel('Load [MW]')
+plt.ylabel('Temperature [°C]')
 ### removing the outlayers to improve dataset for better prediction ############
 
 hist_df_filtered  = hist_df[hist_df['load']>2300]
+
+plt.figure()
 plt.scatter(hist_df_filtered['load'],hist_df_filtered['temperature'])
-#plt.show()
+plt.title('Filtered data')
+plt.xlabel('Load [MW]')
+plt.ylabel('Temperature [°C]')
 
 ### preparing a linear regression model
 
@@ -50,7 +55,11 @@ print(linear_regressor.coef_, linear_regressor.intercept_)
 ### plotting model vs observation to assess quality
 load_predict = linear_regressor.predict(indep_var)
 
+plt.figure()
 plt.scatter(indep_var,dep_var)
 plt.plot(indep_var, load_predict, color = 'red')
-#plt.show()
+plt.title('Linear regression model')
+plt.xlabel('Temperature [°C]')
+plt.ylabel('Load [MW]')
+plt.show()
 
