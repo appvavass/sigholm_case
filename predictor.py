@@ -18,6 +18,7 @@ def forecast_heat_load(input_dict: Dict[datetime, temperature]) -> Dict[datetime
     # Do your forecast here
 
     forecast = pd.DataFrame.from_dict(data = input_dict, orient= 'index', columns=['forecast_temp'])
+    forecast.index = pd.to_datetime(forecast.index) ## convert to datetime if necessary?
 
     ### use coefficient calculated from the previous data analysis    
     
