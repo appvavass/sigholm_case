@@ -24,6 +24,9 @@ df_temp.drop_duplicates(inplace=True)
 hist_df = df_load.merge(df_temp, left_on= 'time', right_on = 'time')
 hist_df['time'] = pd.to_datetime(hist_df['time'])  ##convert to datetime
 
+### export cleaned dataframe
+hist_df.to_csv('cleaned_data.csv')
+
 ### exploring the data #########################################################
 plt.figure()
 plt.scatter(hist_df['load'],hist_df['temperature'],marker = '*')
