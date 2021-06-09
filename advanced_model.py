@@ -20,7 +20,7 @@ ax2.plot(hourly_avg_load.index, hourly_avg_load['temperature'], 'r--')
 ax1.set_xlabel('Hour of the day')
 ax1.set_ylabel('Load', color='g')
 ax2.set_ylabel('Temperature', color='r')
-#plt.show()
+plt.show()
 ### the load is higher in late afternoon even if the temperature is the same
 
 ### filter out bad data
